@@ -3,7 +3,6 @@ exports.up = function(knex, Promise) {
     .createTable('schools', tbl => {
       tbl.increments('id');
       tbl.string('school_name', 200);
-      tbl.uuid('id').primary();
     })
     .createTable('bubls', tbl => {
       tbl.increments('id');
@@ -21,7 +20,7 @@ exports.up = function(knex, Promise) {
         .inTable('schools')
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
-      tbl.uuid('id').primary();
+      tbl.timestamp('created_at').defaultTo(knex.fn.now());
     })
     .createTable('users', tbl => {
       tbl.increments('id');
@@ -32,27 +31,26 @@ exports.up = function(knex, Promise) {
       tbl.string('password', 255).notNullable();
       tbl.string('role', 128).defaultTo('student');
       tbl.string('school_name', 128).notNullable();
-      tbl.timestamp();
+      tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_school_id')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('schools')
-        .onDelete('RESCTRICT')
+        .onDelete('RESTRICT')
         .onUpdate('CASCADE');
-      tbl.uuid('id').primary();
     })
     .createTable('bubl_users_mapping', tbl => {
       tbl.increments('id');
-      tbl.timestamp();
+      tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_bubl_id')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('bubls')
-        .onDelete('RESCTRICT')
+        .onDelete('RESTRICT')
         .onUpdate('CASCADE');
 
       tbl
@@ -61,9 +59,8 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .references('id')
         .inTable('users')
-        .onDelete('RESCTRICT')
+        .onDelete('RESTRICT')
         .onUpdate('CASCADE');
-      tbl.uuid('id').primary();
     })
     .createTable('posts', tbl => {
       tbl.increments();
@@ -73,7 +70,7 @@ exports.up = function(knex, Promise) {
         .notNullable();
       tbl.string('body').notNullable();
       tbl.string('author', 128).notNullable();
-      tbl.timestamp();
+      tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_user_id')
         .unsigned()
@@ -82,13 +79,12 @@ exports.up = function(knex, Promise) {
         .inTable('posts')
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
-      tble.uuid('id').primary();
     })
     .createTable('comments', tbl => {
       tbl.increments();
       tbl.string('body').notNullable();
       tbl.string('author', 128).notNullable();
-      tbl.timstamp();
+      tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_user_id')
         .unsigned()
@@ -105,7 +101,6 @@ exports.up = function(knex, Promise) {
         .inTable('posts')
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
-      tbl.uuid('id').primary();
     })
     .createTable('hashtags', tbl => {
       tbl.increments();

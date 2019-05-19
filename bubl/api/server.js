@@ -9,6 +9,7 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 server.use(morgan('dev'));
+server.use(cors());
 
 // Route middlewares
 server.use('/api/auth', authsRouter);
