@@ -9,11 +9,10 @@ module.exports = function validation(req, res, next) {
       .required(),
     password: Joi.string()
       .regex(/^[a-zA-Z0-9]{6,255}$/)
-      .required(),
-    role: Joi.string().required()
+      .required()
   });
 
-  Joi.valiate(
+  Joi.validate(
     (req.body,
     schema,
     (e, result) => {

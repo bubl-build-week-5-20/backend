@@ -32,14 +32,6 @@ exports.up = function(knex, Promise) {
       tbl.string('role', 128).defaultTo('student');
       tbl.string('school_name', 128);
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
-      tbl
-        .integer('FK_school_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('schools')
-        .onDelete('RESTRICT')
-        .onUpdate('CASCADE');
     })
     .createTable('bubl_users_mapping', tbl => {
       tbl.increments('id');
