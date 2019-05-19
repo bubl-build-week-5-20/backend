@@ -1,11 +1,11 @@
-const dd = require('../data/dbConfig.js');
+const db = require('../data/dbConfig.js');
 
 module.exports = {
   getUsers,
   getUserById,
-  addUser,
-  editUser,
-  deleteUser
+  addUser
+  // editUser,
+  // deleteUser
 };
 
 function getUsers() {

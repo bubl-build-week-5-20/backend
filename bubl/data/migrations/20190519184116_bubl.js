@@ -30,7 +30,7 @@ exports.up = function(knex, Promise) {
         .notNullable();
       tbl.string('password', 255).notNullable();
       tbl.string('role', 128).defaultTo('student');
-      tbl.string('school_name', 128).notNullable();
+      tbl.string('school_name', 128);
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_school_id')

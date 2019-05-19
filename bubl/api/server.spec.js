@@ -13,8 +13,8 @@ describe('Server', () => {
     expect(res.type).toBe('application/json');
   });
 
-  it(`Should return a body content of {api: 'up'}`, async () => {
+  it(`Should return a body content of {Welcome_to: 'Bubl'}`, async () => {
     const res = await request(server).get('/');
-    expect(res.body).toEqual({api: 'up'});
+    expect(res.body).toEqual({Welcome_to: 'Bubl'});
   });
 });
