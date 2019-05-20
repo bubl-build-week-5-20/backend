@@ -15,6 +15,7 @@ router.post('/register', authValidation, async (req, res) => {
       .status(201)
       .json({message: `${user.username} was successfully registered!`});
   } catch (e) {
+    console.log(e.message);
     res
       .status(500)
       .json({errorMessage: 'Server error while registering a new user.'});

@@ -10,6 +10,12 @@ exports.seed = function(knex, Promise) {
           username: 'John',
           password:
             '$2b$10$HFT6p9V8.c4m5Fhfp8K3zuDSIcLlNXPuQy95ILmorw6./cV2UvZYy'
+        },
+        {
+          id: 2,
+          username: 'Rocky',
+          password:
+            '$2b$10$KMCBfXnJrdKbQUZ7oVZrHeZlVmmiVkr1HCLmRWF45V7Kit70BpVLW'
         }
       ]);
     });
