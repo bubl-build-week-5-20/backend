@@ -32,9 +32,9 @@ async function addUser(user) {
     .first();
 }
 
-async function editUser(id, editedUser) {
-  const [id] = await db('users')
-    .where('id', id)
+function editUser(id, editedUser) {
+  return db('users')
+    .where({id})
     .update(editedUser)
     .then(count => (count > 0 ? this.get(id) : null));
 }

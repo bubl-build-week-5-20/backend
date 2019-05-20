@@ -9,7 +9,7 @@ module.exports = {
   deletePost
 };
 
-function getPost() {
+function getPosts() {
   return db('posts');
 }
 
