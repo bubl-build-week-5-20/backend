@@ -61,12 +61,12 @@ exports.up = function(knex, Promise) {
         .unique()
         .notNullable();
       tbl.string('body').notNullable();
-      tbl.string('author', 128).notNullable();
+      tbl.string('author', 128);
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_user_id')
         .unsigned()
-        .notNullable()
+        .defaultTo('1')
         .references('id')
         .inTable('posts')
         .onDelete('RESTRICT')
