@@ -32,15 +32,16 @@ async function addPost(post) {
     .first();
 }
 
-function editPost(id, post) {
+function editPost(id, editedPost) {
+  console.log(editedPost);
   return db('posts')
-    .where({id})
-    .update(post)
-    .then(post => (post > 0 ? this.get(id) : null));
+    .where('id', id)
+    .update(editedPost)
+    .then(count => (count > 0 ? this.getPostById(id) : null));
 }
 
 function deletePost(id) {
   return db('posts')
-    .where({id})
+    .where('id', id)
     .del();
 }

@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const authsRouter = require('../auth/auths-router.js');
 const usersRouter = require('../ressources/users/users-router.js');
+const postsRouter = require('../ressources/posts/posts-router.js');
 
 const server = express();
 
@@ -16,6 +17,7 @@ server.use(cors());
 // Route middlewares
 server.use('/api/auth', authsRouter);
 server.use('/api/users', usersRouter);
+server.use('/api/posts', postsRouter);
 
 server.get('/', async (req, res) => {
   try {
