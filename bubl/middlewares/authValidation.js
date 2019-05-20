@@ -12,15 +12,13 @@ module.exports = function validation(req, res, next) {
       .required()
   });
 
-  Joi.validate(
-    (req.body,
-    schema,
-    (e, result) => {
-      e
-        ? res
-            .status(400)
-            .json({errorMessage: 'Please provide a username and password.'})
-        : next();
-    })
-  );
+  Joi.validate(req.body, schema, (e, result) => {
+    if (e) {
+      res
+        .status(400)
+        .json({errorMessage: 'Please provide username and password!'});
+    } else {
+      next();
+    }
+  });
 };

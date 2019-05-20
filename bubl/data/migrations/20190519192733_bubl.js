@@ -1,15 +1,15 @@
 exports.up = function(knex, Promise) {
   return knex.schema
     .createTable('schools', tbl => {
-      tbl.increments('id');
+      tbl.increments();
       tbl.string('school_name', 200);
     })
     .createTable('bubls', tbl => {
-      tbl.increments('id');
+      tbl.increments();
       tbl
         .string('bubl_name', 200)
-        .unique()
-        .notNullable();
+        .notNullable()
+        .unique();
       tbl.integer('max_students_allowed').notNullable();
       tbl.boolean('is_active').defaultTo(true);
       tbl
@@ -23,18 +23,18 @@ exports.up = function(knex, Promise) {
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
     })
     .createTable('users', tbl => {
-      tbl.increments('id');
+      tbl.increments();
       tbl
         .string('username', 128)
-        .unique()
-        .notNullable();
+        .notNullable()
+        .unique();
       tbl.string('password', 255).notNullable();
       tbl.string('role', 128).defaultTo('student');
       tbl.string('school_name', 128);
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
     })
     .createTable('bubl_users_mapping', tbl => {
-      tbl.increments('id');
+      tbl.increments();
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_bubl_id')

@@ -8,7 +8,7 @@ module.exports = function generateToken(user) {
     role: user.role
   };
 
-  const option = {
+  const options = {
     expiresIn: '1h'
   };
 
