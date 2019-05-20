@@ -4,20 +4,13 @@ module.exports = {
   getUsers,
   getUserById,
   getUserByName,
-  addUser
-  // editUser,
-  // deleteUser
+  addUser,
+  editUser,
+  deleteUser
 };
 
 function getUsers() {
-  return db('users').select(
-    'id',
-    'username',
-    'role',
-    'school_name',
-    'created_at',
-    'FK_school_id'
-  );
+  return db('users').select('id', 'username', 'role', 'school_name');
 }
 
 function getUserById(id) {
@@ -37,4 +30,17 @@ async function addUser(user) {
   return db('users')
     .where({id})
     .first();
+}
+
+async function editUser(id, editedUser) {
+  const [id] = await db('users')
+    .where('id', id)
+    .update(editedUser)
+    .then(count => (count > 0 ? this.get(id) : null));
+}
+
+function deleteUser(id) {
+  return db('users')
+    .where('id', id)
+    .del();
 }
