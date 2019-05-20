@@ -1,20 +1,15 @@
 const Joi = require('@hapi/joi');
 
-module.exports = function postValidation(req, res, next) {
+module.exports = function commentValidation(req, res, next) {
   const schema = Joi.object().keys({
-    title: Joi.string()
-      .min(3)
-      .max(128)
-      .required(),
     body: Joi.string()
       .min(6)
-      .required()
+      .max(255)
   });
-
   Joi.validate(req.body, schema, (e, result) => {
     if (e) {
       res.status(400).json({
-        errorMessage: 'Please provide a title and content for the post! '
+        errorMessage: 'In order to comment you have to write something!'
       });
     } else {
       next();
