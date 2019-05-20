@@ -1,7 +1,7 @@
 const request = require('supertest');
 const server = require('../api/server.js');
 const User = require('./users-model.js');
-const db = require('../data/dbConfig.js');
+const db = require('../../data/dbConfig.js');
 
 describe('GET /', () => {
   beforeEach(async () => {

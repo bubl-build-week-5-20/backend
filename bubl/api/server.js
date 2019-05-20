@@ -3,7 +3,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
 const authsRouter = require('../auth/auths-router.js');
-const usersRouter = require('../users/users-router.js');
+const usersRouter = require('../ressources/users/users-router.js');
 
 const server = express();
 

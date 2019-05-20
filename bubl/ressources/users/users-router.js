@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const db = require('./users-model.js');
-const authValidation = require('../middlewares/authValidation.js');
+const authValidation = require('../../middlewares/authValidation.js');
 
 router.get('/', async (req, res) => {
   try {
@@ -73,11 +73,9 @@ router.delete('/:id', async (req, res) => {
     }
   } catch (e) {
     console.log(e.message);
-    res
-      .status(500)
-      .json({
-        errorMessage: 'Server error while deleting the user from the database.'
-      });
+    res.status(500).json({
+      errorMessage: 'Server error while deleting the user from the database.'
+    });
   }
 });
 

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const authValidation = require('../middlewares/authValidation.js');
-const db = require('../users/users-model.js');
+const db = require('../ressources/users/users-model.js');
 const generateToken = require('./generateToken.js');
 
 router.post('/register', authValidation, async (req, res) => {
