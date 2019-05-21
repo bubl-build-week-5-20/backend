@@ -3,7 +3,7 @@ const db = require('./posts-model.js');
 const postValidation = require('../../middlewares/postValidation.js');
 const restricted = require('../../middlewares/restricted.js');
 
-router.post('/', restricted, postValidation, async (req, res) => {
+router.post('/', restricted, async (req, res) => {
   try {
     const post = await db.addPost(req.body);
     res.status(201).json(post);
@@ -43,7 +43,7 @@ router.get('/:id', restricted, async (req, res) => {
   }
 });
 
-router.put('/:id', restricted, postValidation, async (req, res) => {
+router.put('/:id', restricted, async (req, res) => {
   try {
     const editedPost = await db.editPost(req.params.id, req.body);
     if (!editedPost) {
