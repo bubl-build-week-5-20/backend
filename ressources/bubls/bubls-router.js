@@ -4,22 +4,17 @@ const bublValidation = require('../../middlewares/bublValidation.js');
 const checkRoles = require('../../middlewares/checkRoles.js');
 const restricted = require('../../middlewares/restricted.js');
 
-router.post(
-  '/',
-  restricted,
-  checkRoles('administrator'),
-  bublValidation,
-  async (req, res) => {
-    try {
-      const bubl = await db.addBubl(req.body);
-      res.status(201).json(bubl);
-    } catch (e) {
-      res.status(500).json({
-        errorMessage: `Server error couldn't create the bubl.`
-      });
-    }
+router.post('/', restricted, checkRoles('administrator'), async (req, res) => {
+  try {
+    const bubl = await db.addBubl(req.body);
+    res.status(201).json(bubl);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({
+      errorMessage: `Server error couldn't create the bubl.`
+    });
   }
-);
+});
 
 router.get('/', restricted, async (req, res) => {
   try {
@@ -53,7 +48,6 @@ router.put(
   '/:id',
   restricted,
   checkRoles('administrator'),
-  bublValidation,
   async (req, res) => {
     try {
       const editedBubl = await db.editBubl(req.params.id, req.body);
@@ -76,7 +70,6 @@ router.delete(
   '/:id',
   restricted,
   checkRoles('administrator'),
-  bublValidation,
   async (req, res) => {
     try {
       const deletedBubl = await db.deleteBubl(id);
