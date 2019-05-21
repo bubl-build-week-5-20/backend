@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const db = require('./users-model.js');
 const authValidation = require('../../middlewares/authValidation.js');
+const restricted = require('../../middlewares/restricted.js');
 
-router.get('/', async (req, res) => {
+router.get('/', restricted, async (req, res) => {
   try {
     const users = await db.getUsers();
     res.status(200).json(users);
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', restricted, async (req, res) => {
   try {
     const foundUser = await db.getUserById(req.params.id);
     if (!foundUser) {
@@ -32,7 +33,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', authValidation, async (req, res) => {
+router.post('/', restricted, authValidation, async (req, res) => {
   try {
     let user = req.body;
     const newUser = await db.addUser(user);
@@ -45,7 +46,7 @@ router.post('/', authValidation, async (req, res) => {
   }
 });
 
-router.put('/:id', authValidation, async (req, res) => {
+router.put('/:id', restricted, authValidation, async (req, res) => {
   try {
     const editedUser = await db.editUser(req.params.id, req.body);
     if (!editedUser) {
@@ -63,7 +64,7 @@ router.put('/:id', authValidation, async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', restricted, async (req, res) => {
   try {
     const deletedUser = await db.deleteUser(req.params.id);
     if (!deletedUser) {

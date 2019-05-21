@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
         .string('bubl_name', 200)
         .notNullable()
         .unique();
-      tbl.integer('max_students_allowed').notNullable();
+      tbl.integer('max_students_allowed');
       tbl.boolean('is_active').defaultTo(true);
       tbl
         .integer('FK_school_id')
