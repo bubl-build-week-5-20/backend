@@ -2,22 +2,17 @@ const router = require('express').Router();
 const checkRoles = require('../../middlewares/checkRoles.js');
 const schoolValidation = require('../../middlewares/schoolValidation.js');
 const db = require('./schools-model.js');
+const restricted = require('../../middlewares/restricted.js');
 
-router.post(
-  '/',
-  checkRoles('administrator'),
-  schoolValidation,
-  async (req, res) => {
-    try {
-      const school = await db.addSchool(req.body);
-      res.status(201).json(school);
-    } catch (e) {
-      res
-        .status(500)
-        .json({errorMessage: `Server error couldn't create school`});
-    }
+router.post('/', restricted, checkRoles('administrator'), async (req, res) => {
+  try {
+    const school = await db.addSchool(req.body);
+    res.status(201).json(school);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({errorMessage: `Server error couldn't create school`});
   }
-);
+});
 
 router.get('/', async (req, res) => {
   try {
