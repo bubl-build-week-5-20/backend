@@ -25,7 +25,7 @@ describe('School routes', () => {
       .expect(200);
   });
 
-  it('GET /:id', async () => {
+  it('GET /:id should return a status code 200 OK', async () => {
     const school = {
       school_name: 'Stowe Middle School'
     };
@@ -34,10 +34,37 @@ describe('School routes', () => {
       .post('/api/schools')
       .send(school);
 
-    const foundSchool = await Schools.getShoolById('1');
+    let foundSchool = await Schools.getShoolById(1);
 
     await request(server)
       .get(`/api/schools/${foundSchool.id}`)
+      .expect(200);
+  });
+
+  it('PUT /:id should return a status code 200 OK', async () => {
+    const school = {
+      school_name: 'Stowe Middle School'
+    };
+
+    await Schools.addSchool(school);
+
+    let foundSchool = await Schools.getShoolById(1);
+    await request(server)
+      .put(`/api/schools/${foundSchool.id}`)
+      .send({...foundSchool, school_name: 'Bloomfield Middle School'})
+      .expect(200);
+  });
+
+  it('DELETE /:id should return a status code of code 200 OK', async () => {
+    const school = {
+      school_name: 'Stowe Middle School'
+    };
+
+    await Schools.addSchool(school);
+
+    let foundSchool = await Schools.getShoolById(1);
+    await request(server)
+      .delete(`/api/schools/${foundSchool.id}`)
       .expect(200);
   });
 });
