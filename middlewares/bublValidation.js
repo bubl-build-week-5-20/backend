@@ -9,6 +9,7 @@ module.exports = function bublValidation(req, res, next) {
     max_students_allowed: Joi.number().integer()
   });
   Joi.validate(req.body, schema, (e, result) => {
+    console.log(req.body);
     if (e) {
       res.status(400).json({errorMessage: 'Please provide a name!'});
     } else {

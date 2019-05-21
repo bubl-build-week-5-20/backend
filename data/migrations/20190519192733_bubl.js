@@ -6,10 +6,7 @@ exports.up = function(knex, Promise) {
     })
     .createTable('bubls', tbl => {
       tbl.increments();
-      tbl
-        .string('bubl_name', 200)
-        .notNullable()
-        .unique();
+      tbl.string('bubl_name', 200).notNullable();
       tbl.integer('max_students_allowed');
       tbl.boolean('is_active').defaultTo(true);
       tbl
