@@ -3,7 +3,6 @@ const Joi = require('@hapi/joi');
 module.exports = function bublValidation(req, res, next) {
   const schema = Joi.object().keys({
     bubl_name: Joi.string()
-      .alphanum()
       .min(3)
       .max(200)
       .required(),
