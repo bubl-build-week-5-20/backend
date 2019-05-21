@@ -40,46 +40,34 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put(
-  '/:id',
-  checkRoles('administrator'),
-  schoolValidation,
-  async (req, res) => {
-    try {
-      const editedSchool = await db.editSchool(req.params.id, req.body);
-      if (!editedSchool) {
-        res.status(404).json({
-          errorMessage: `No school with ID ${req.params.id} was found.`
-        });
-      } else {
-        res.status(200).json(editedSchool);
-      }
-    } catch (e) {
-      res.status(500).json({errorMessage: `Server couldn't edit the school.`});
+router.put('/:id', checkRoles('administrator'), async (req, res) => {
+  try {
+    const editedSchool = await db.editSchool(req.params.id, req.body);
+    if (!editedSchool) {
+      res.status(404).json({
+        errorMessage: `No school with ID ${req.params.id} was found.`
+      });
+    } else {
+      res.status(200).json(editedSchool);
     }
+  } catch (e) {
+    res.status(500).json({errorMessage: `Server couldn't edit the school.`});
   }
-);
+});
 
-router.delete(
-  '/:id',
-  checkRoles('administrator'),
-  schoolValidation,
-  async (req, res) => {
-    try {
-      const deletedSchool = await db.deleteSchool(req.params.id);
-      if (!deletedSchool) {
-        res.status(404).json({
-          errorMessage: `School with ID ${req.params.id} was not found.`
-        });
-      } else {
-        res.status(200).json({message: 'School successfully deleted.'});
-      }
-    } catch (e) {
-      res
-        .status(500)
-        .json({errorMessage: `Server couldn't delete the school.`});
+router.delete('/:id', checkRoles('administrator'), async (req, res) => {
+  try {
+    const deletedSchool = await db.deleteSchool(req.params.id);
+    if (!deletedSchool) {
+      res.status(404).json({
+        errorMessage: `School with ID ${req.params.id} was not found.`
+      });
+    } else {
+      res.status(200).json({message: 'School successfully deleted.'});
     }
+  } catch (e) {
+    res.status(500).json({errorMessage: `Server couldn't delete the school.`});
   }
-);
+});
 
 module.exports = router;
