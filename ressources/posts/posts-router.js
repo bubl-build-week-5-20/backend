@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const db = require('./posts-model.js');
 const postValidation = require('../../middlewares/postValidation.js');
+const restricted = require('../../middlewares/restricted.js');
 
-router.post('/', postValidation, async (req, res) => {
+router.post('/', restricted, postValidation, async (req, res) => {
   try {
     const post = await db.addPost(req.body);
     res.status(201).json(post);
@@ -14,7 +15,7 @@ router.post('/', postValidation, async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', restricted, async (req, res) => {
   try {
     const posts = await db.getPosts();
     res.status(200).json(posts);
@@ -25,7 +26,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', restricted, async (req, res) => {
   try {
     const foundPost = await db.getPostById(req.params.id);
     if (!foundPost) {
@@ -42,7 +43,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', postValidation, async (req, res) => {
+router.put('/:id', restricted, postValidation, async (req, res) => {
   try {
     const editedPost = await db.editPost(req.params.id, req.body);
     if (!editedPost) {
@@ -56,7 +57,7 @@ router.put('/:id', postValidation, async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', restricted, async (req, res) => {
   try {
     const deletedPost = await db.deletePost(req.params.id);
     if (!deletedPost) {

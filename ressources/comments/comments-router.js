@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const db = require('./comments-model.js');
 const commentValidaton = require('../../middlewares/commentValidation.js');
+const restricted = require('../../middlewares/restricted.js');
 
-router.post('/', async (req, res) => {
+router.post('/', restricted, async (req, res) => {
   try {
     const comment = db.addComment(req.body);
     res.status(201).json(comment);
@@ -13,7 +14,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', restricted, async (req, res) => {
   try {
     const comments = await db.getComments();
     res.status(200).json(comments);
@@ -24,7 +25,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', restricted, async (req, res) => {
   try {
     const foundComment = await db.getCommentById(req.params.id);
     if (!comment) {
@@ -41,7 +42,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', commentValidaton, async (req, res) => {
+router.put('/:id', restricted, commentValidaton, async (req, res) => {
   try {
     const editedComment = await db.editComment(req.params.id, req.body);
     if (!editedComment) {
@@ -60,15 +61,13 @@ router.put('/:id', commentValidaton, async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', restricted, async (req, res) => {
   try {
     const deletedComment = await db.deleteComment(req.params.id);
     if (!deletedComment) {
-      res
-        .status(404)
-        .json({
-          errorMessage: `Comment with ID ${req.params.id} doesn't exist.`
-        });
+      res.status(404).json({
+        errorMessage: `Comment with ID ${req.params.id} doesn't exist.`
+      });
     } else {
       res.status(200).json({message: 'Comment successfully deleted.'});
     }
