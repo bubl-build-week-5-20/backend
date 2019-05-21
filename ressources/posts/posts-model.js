@@ -33,7 +33,6 @@ async function addPost(post) {
 }
 
 function editPost(id, editedPost) {
-  console.log(editedPost);
   return db('posts')
     .where('id', id)
     .update(editedPost)
