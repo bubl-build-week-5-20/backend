@@ -12,7 +12,8 @@ module.exports = (req, res, next) => {
           errorMessage: 'Access Unhauthorized you must have a valid token!'
         });
       } else {
-        req.decodedJwt = decodedToken;
+        req.decodedToken = decodedToken;
+        console.log(decodedToken);
         next();
       }
     });

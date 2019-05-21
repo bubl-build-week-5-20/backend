@@ -2,9 +2,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports = role => {
   return function(req, res, next) {
-    req.decodedToken &&
-    req.decodedToken.role &&
-    req.decodedToken.role.includes(role)
+    // console.log(req.decodedToken.role);
+    req.decodedToken && req.decodedToken.role && req.decodedToken.role === role
       ? next()
       : res.status(403).json({
           message:
