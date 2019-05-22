@@ -1,9 +1,11 @@
 const db = require('../../data/dbConfig.js');
+const mapper = require('../mapper.js');
 
 module.exports = {
   getSchools,
   getShoolById,
   getSchoolsBubls,
+  getSchoolsUsers,
   addSchool,
   editSchool,
   deleteSchool
@@ -29,7 +31,23 @@ function getSchoolsBubls(id) {
       'bubls.is_active',
       'bubls.created_at'
     )
-    .where('bubls.FK_school_id', id);
+    .where('bubls.FK_school_id', id)
+    .then(bubls => bubls.map(bubl => mapper.bublToBody(bubl)));
+}
+
+function getSchoolsUsers(id) {
+  return db('users')
+    .join('schools', 'schools.id', 'users.FK_school_id')
+    .select(
+      'users.id',
+      'users.username',
+      'users.role',
+      'users.school_name',
+      'users.created_at',
+      'FK_school_id'
+    )
+    .where('users.FK_school_id', id)
+    .then(users => users.map(user => mapper.userToBody(user)));
 }
 
 async function addSchool(school) {

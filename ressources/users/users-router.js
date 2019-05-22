@@ -18,12 +18,14 @@ router.get('/', restricted, async (req, res) => {
 router.get('/:id', restricted, async (req, res) => {
   try {
     const foundUser = await db.getUserById(req.params.id);
+    const bubls = await db.getUserBubls(req.params.id);
     if (!foundUser) {
       res
         .status(404)
         .json({errorMessage: `No user found with ID ${req.params.id}.`});
     } else {
-      res.status(200).json(foundUser);
+      const user = {...foundUser, bubls};
+      res.status(200).json(user);
     }
   } catch (e) {
     console.log(e.message);
@@ -39,7 +41,6 @@ router.post('/', restricted, authValidation, async (req, res) => {
     const newUser = await db.addUser(user);
     res.status(200).json({message: 'User was successfully created'}, newUser);
   } catch (e) {
-    console.log(e.message);
     res.status(500).json({
       errorMessage: 'Server error while adding the new user to the database.'
     });

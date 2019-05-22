@@ -1,4 +1,5 @@
 const db = require('../../data/dbConfig.js');
+const mapper = require('../mapper.js');
 
 module.exports = {
   getUsers,
@@ -6,7 +7,8 @@ module.exports = {
   getUserByName,
   addUser,
   editUser,
-  deleteUser
+  deleteUser,
+  getUserBubls
 };
 
 function getUsers() {
@@ -23,6 +25,12 @@ function getUserByName(username) {
   return db('users')
     .where({username})
     .first();
+}
+
+function getUserBubls(id) {
+  return db('bubl_users_mapping')
+    .where('bubl_users_mapping.FK_users_id', id)
+    .then(bubls => bubls.map(bubl => mapper.bublToBody(bubl)));
 }
 
 async function addUser(user) {

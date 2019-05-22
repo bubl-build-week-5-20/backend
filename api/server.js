@@ -8,6 +8,9 @@ const postsRouter = require('../ressources/posts/posts-router.js');
 const commentsRouter = require('../ressources/comments/comments-router.js');
 const schoolsRouter = require('../ressources/schools/schools-router.js');
 const BublsRouter = require('../ressources/bubls/bubls-router.js');
+const rolesRouter = require('../ressources/roles/roles-router.js');
+const hashtagsRouter = require('../ressources/hashtags/hashtags-router.js');
+const restricted = require('../middlewares/restricted.js');
 
 const server = express();
 
@@ -24,6 +27,8 @@ server.use('/api/posts', postsRouter);
 server.use('/api/comments', commentsRouter);
 server.use('/api/schools', schoolsRouter);
 server.use('/api/bubls', BublsRouter);
+server.use('/api/roles', rolesRouter, restricted);
+server.use('/api/hashtags', hashtagsRouter, restricted);
 
 server.get('/', async (req, res) => {
   try {

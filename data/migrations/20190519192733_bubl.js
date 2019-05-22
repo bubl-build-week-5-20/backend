@@ -15,9 +15,16 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .references('id')
         .inTable('schools')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
+    })
+    .createTable('roles', tbl => {
+      tbl.increments();
+      tbl
+        .string('role', 128)
+        .unique()
+        .notNullable();
     })
     .createTable('users', tbl => {
       tbl.increments();
@@ -29,6 +36,20 @@ exports.up = function(knex, Promise) {
       tbl.string('role', 128).defaultTo('student');
       tbl.string('school_name', 128);
       tbl.timestamp('created_at').defaultTo(knex.fn.now());
+      tbl
+        .integer('FK_school_id')
+        .unsigned()
+        .references('id')
+        .inTable('schools')
+        .onDelete('RESTRICT')
+        .onUpdate('CASCADE');
+      tbl
+        .integer('FK_role_id')
+        .unsigned()
+        .references('id')
+        .inTable('schools')
+        .onDelete('RESTRICT')
+        .onUpdate('CASCADE');
     })
     .createTable('bubl_users_mapping', tbl => {
       tbl.increments();
@@ -63,6 +84,7 @@ exports.up = function(knex, Promise) {
       tbl
         .integer('FK_user_id')
         .unsigned()
+        .notNullable()
         .defaultTo('1')
         .references('id')
         .inTable('posts')
@@ -127,18 +149,28 @@ exports.up = function(knex, Promise) {
         .inTable('comments')
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
+
+      tbl
+        .integer('FK_hashtags_id')
+        .unsigned()
+        .notNullable()
+        .references()
+        .inTable('hashtags')
+        .onDelete('RESTRICT')
+        .onUpdate('CASCADE');
     });
 };
 
 exports.down = function(knex, Promise) {
   return knex.schema
-    .dropTableIfExists('comments_hashtags_mapping')
+    .dropTableIfExists('comment_hashtags_mapping')
     .dropTableIfExists('post_hashtags_mapping')
     .dropTableIfExists('hashtags')
     .dropTableIfExists('comments')
     .dropTableIfExists('posts')
     .dropTableIfExists('bubl_users_mapping')
     .dropTableIfExists('users')
+    .dropTableIfExists('roles')
     .dropTableIfExists('bubls')
     .dropTableIfExists('schools');
 };
