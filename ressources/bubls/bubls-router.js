@@ -30,14 +30,17 @@ router.get('/', restricted, async (req, res) => {
 router.get('/:id', restricted, async (req, res) => {
   try {
     const foundBubl = await db.getBublById(req.params.id);
+    const users = await db.getBublUsers(req.params.id);
     if (!foundBubl) {
       res
         .status(404)
         .json({errorMessage: `Bubl with ID ${req.params.id} not found.`});
     } else {
-      res.status(200).json(foundBubl);
+      const bubl = {...foundBubl, users};
+      res.status(200).json(bubl);
     }
   } catch (e) {
+    console.log(e.message);
     res
       .status(500)
       .json({errorMessage: `Server error couldn't retrieve the bubl.`});

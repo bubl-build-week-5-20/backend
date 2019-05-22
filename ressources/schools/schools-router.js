@@ -29,12 +29,13 @@ router.get('/:id', async (req, res) => {
   try {
     const foundSchool = await db.getShoolById(req.params.id);
     const bubls = await db.getSchoolsBubls(req.params.id);
+    const users = await db.getSchoolsUsers(req.params.id);
     if (!foundSchool) {
       res
         .status(404)
         .json({errorMessage: `No school with ID ${req.params.id} was found.`});
     } else {
-      const school = {...foundSchool, bubls};
+      const school = {...foundSchool, bubls, users};
       res.status(200).json(school);
     }
   } catch (e) {
