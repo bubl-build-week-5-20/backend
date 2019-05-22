@@ -145,7 +145,7 @@ exports.up = function(knex, Promise) {
         .integer('FK_hashtags_id')
         .unsigned()
         .notNullable()
-        .references()
+        .references('id')
         .inTable('hashtags')
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
@@ -165,7 +165,7 @@ exports.up = function(knex, Promise) {
         .integer('FK_hashtags_id')
         .unsigned()
         .notNullable()
-        .references()
+        .references('id')
         .inTable('hashtags')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
