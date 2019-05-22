@@ -20,6 +20,7 @@ router.get('/', restricted, async (req, res) => {
     const posts = await db.getPosts();
     res.status(200).json(posts);
   } catch (e) {
+    console.log(e.message);
     res
       .status(500)
       .json({errorMessage: 'Server error while retrieving the posts.'});
@@ -28,7 +29,7 @@ router.get('/', restricted, async (req, res) => {
 
 router.get('/:id', restricted, async (req, res) => {
   try {
-    const foundPost = await db.getPostById(req.params.id);
+    const foundPost = await db.getPosts(req.params.id);
     if (!foundPost) {
       res
         .status(404)

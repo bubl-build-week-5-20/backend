@@ -33,7 +33,7 @@ function getPosts(id) {
   }
 
   return query.then(posts => {
-    return posts.map(post => mappers.postToBody(post));
+    return posts.map(post => mapper.postToBody(post));
   });
 }
 
