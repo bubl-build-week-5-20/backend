@@ -4,7 +4,7 @@ const authValidation = require('../middlewares/authValidation.js');
 const db = require('../ressources/users/users-model.js');
 const generateToken = require('./generateToken.js');
 
-router.post('/register', authValidation, async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     let user = req.body;
     const salt = await bcrypt.genSalt(10);
@@ -22,7 +22,7 @@ router.post('/register', authValidation, async (req, res) => {
   }
 });
 
-router.post('/login', authValidation, async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const {username, password} = req.body;
     const foundUser = await db.getUserByName(username);
