@@ -14,18 +14,31 @@ router.post('/', restricted, checkRoles('administrator'), async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', restricted, async (req, res) => {
   try {
-    const schools = await db.getSchools();
+    // const schools = await db.getSchools();
+    const schools = {};
+    const bubls = await db.getBubls();
+    console.log(bubls);
+    bubls.map(bubl => {
+      if (schools[bubl.school_name] === undefined) {
+        schools[bubl.school_name] = [];
+        schools[bubl.school_name].push(bubl.bubl_name);
+      } else {
+        schools[bubl.school_name].push(bubl.bubl_name);
+      }
+    });
+
     res.status(200).json(schools);
   } catch (e) {
+    console.log(e.message);
     res.status(500).json({
       errorMessage: `Server error couldn't retrieve the schools from the database.`
     });
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', restricted, async (req, res) => {
   try {
     const foundSchool = await db.getShoolById(req.params.id);
     const bubls = await db.getSchoolsBubls(req.params.id);
@@ -35,7 +48,7 @@ router.get('/:id', async (req, res) => {
         .status(404)
         .json({errorMessage: `No school with ID ${req.params.id} was found.`});
     } else {
-      const school = {...foundSchool, bubls, users};
+      const school = [{...foundSchool, bubls, users}];
       res.status(200).json(school);
     }
   } catch (e) {

@@ -16,7 +16,15 @@ function getUsers() {
 }
 
 function getUserById(id) {
-  return db('users')
+  return db('users as u')
+    .select(
+      'u.username',
+      'u.role',
+      'u.school_name',
+      'u.created_at',
+      'FK_school_id',
+      'FK_role_id'
+    )
     .where({id})
     .first();
 }

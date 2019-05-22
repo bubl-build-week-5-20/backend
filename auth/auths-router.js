@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const authValidation = require('../middlewares/authValidation.js');
+// const authValidation = require('../middlewares/authValidation.js');
 const db = require('../ressources/users/users-model.js');
 const generateToken = require('./generateToken.js');
+const jwt = require('jsonwebtoken');
+const secrets = require('../config/secret.js');
 
 router.post('/register', async (req, res) => {
   try {
@@ -49,18 +51,22 @@ router.get('/decode', async (req, res) => {
   try {
     const token = await req.headers.authorization;
     if (token) {
-      await jwt.verify(token, secret, (error, decodedToken) => {
-        if (error) {
-          res.status(401).json({message: 'uh oh something went wrong'});
+      await jwt.verify(token, secrets.jwtSecret, (e, decodedToken) => {
+        if (e) {
+          res.status(401).json({
+            message: 'Access Unhauthorized you must have a valid token!'
+          });
         } else {
           res.status(200).json(decodedToken);
         }
       });
     } else {
-      res.status(401).json({message: 'error no token provided'});
+      res.status(401).json({errorMessage: 'A token is required!'});
     }
-  } catch (error) {
-    res.status(500).json({message: 'error getting info'});
+  } catch (e) {
+    res
+      .status(500)
+      .json({errorMessage: `Server error couldn't decode the token.`});
   }
 });
 
