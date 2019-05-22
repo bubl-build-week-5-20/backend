@@ -4,6 +4,6 @@ exports.seed = function(knex, Promise) {
     .del()
     .then(function() {
       // Inserts seed entries
-      return knex('hashtags').insert([{id: 1, hashtag_name: '#math'}]);
+      return knex('hashtags').insert([{hashtag_name: '#math'}]);
     });
 };
