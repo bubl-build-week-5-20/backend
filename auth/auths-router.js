@@ -45,4 +45,23 @@ router.post('/login', authValidation, async (req, res) => {
   }
 });
 
+router.get('/decode', async (req, res) => {
+  try {
+    const token = await req.headers.authorization;
+    if (token) {
+      await jwt.verify(token, secret, (error, decodedToken) => {
+        if (error) {
+          res.status(401).json({message: 'uh oh something went wrong'});
+        } else {
+          res.status(200).json(decodedToken);
+        }
+      });
+    } else {
+      res.status(401).json({message: 'error no token provided'});
+    }
+  } catch (error) {
+    res.status(500).json({message: 'error getting info'});
+  }
+});
+
 module.exports = router;
