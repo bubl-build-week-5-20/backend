@@ -3,6 +3,7 @@ const mapper = require('../mapper.js');
 
 module.exports = {
   getSchools,
+  getBubls,
   getShoolById,
   getSchoolsBubls,
   getSchoolsUsers,
@@ -13,6 +14,14 @@ module.exports = {
 
 function getSchools() {
   return db('schools');
+}
+
+function getBubls() {
+  return db('bubls as b')
+    .select('b.bubl_name', 'schools.school_name')
+    .join('schools', {
+      'schools.id': 'b.FK_school_id'
+    });
 }
 
 function getShoolById(id) {
@@ -44,7 +53,7 @@ function getSchoolsUsers(id) {
       'users.role',
       'users.school_name',
       'users.created_at',
-      'FK_school_id'
+      'users.FK_school_id'
     )
     .where('users.FK_school_id', id)
     .then(users => users.map(user => mapper.userToBody(user)));

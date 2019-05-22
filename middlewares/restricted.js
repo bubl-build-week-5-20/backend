@@ -17,6 +17,6 @@ module.exports = (req, res, next) => {
       }
     });
   } else {
-    res.status(401).json({errorMessage: 'Require to be logged in!'});
+    res.status(401).json({errorMessage: 'Must be logged in!'});
   }
 };
