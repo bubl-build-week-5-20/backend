@@ -2,8 +2,8 @@
 
 module.exports = {
   development: {
-    client: 'pg',
-    connection: './data/bublpostgres',
+    client: 'sqlite3',
+    connection: './data/bubl.db3',
     migrations: {
       directory: './data/migrations'
     },

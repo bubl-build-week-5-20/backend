@@ -39,6 +39,7 @@ exports.up = function(knex, Promise) {
       tbl
         .integer('FK_school_id')
         .unsigned()
+        .notNullable()
         .references('id')
         .inTable('schools')
         .onDelete('RESTRICT')
@@ -46,6 +47,7 @@ exports.up = function(knex, Promise) {
       tbl
         .integer('FK_role_id')
         .unsigned()
+        .notNullable()
         .references('id')
         .inTable('schools')
         .onDelete('RESTRICT')
@@ -88,7 +90,16 @@ exports.up = function(knex, Promise) {
         .defaultTo('1')
         .references('id')
         .inTable('posts')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+      tbl
+        .integer('FK_bubl_id')
+        .unsigned()
+        .notNullable()
+        .defaultTo('1')
+        .references('id')
+        .inTable('bubls')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
     })
     .createTable('comments', tbl => {
@@ -102,7 +113,7 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .references('id')
         .inTable('users')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
       tbl
         .integer('FK_post_id')
@@ -110,7 +121,7 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .references('id')
         .inTable('posts')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
     })
     .createTable('hashtags', tbl => {
@@ -156,7 +167,7 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .references()
         .inTable('hashtags')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
     });
 };
