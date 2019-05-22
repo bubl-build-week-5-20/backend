@@ -39,7 +39,6 @@ exports.up = function(knex, Promise) {
       tbl
         .integer('FK_school_id')
         .unsigned()
-        .notNullable()
         .references('id')
         .inTable('schools')
         .onDelete('RESTRICT')
@@ -47,7 +46,6 @@ exports.up = function(knex, Promise) {
       tbl
         .integer('FK_role_id')
         .unsigned()
-        .notNullable()
         .references('id')
         .inTable('schools')
         .onDelete('RESTRICT')
