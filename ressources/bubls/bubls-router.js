@@ -29,8 +29,11 @@ router.get('/', restricted, async (req, res) => {
 
 router.get('/:id', restricted, async (req, res) => {
   try {
+    console.log(req.params.id);
     const foundBubl = await db.getBublById(req.params.id);
+    console.log(foundBubl);
     const users = await db.getBublUsers(req.params.id);
+    console.log(users);
     if (!foundBubl) {
       res
         .status(404)
