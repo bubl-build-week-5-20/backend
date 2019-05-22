@@ -14,7 +14,7 @@ router.post('/', restricted, checkRoles('administrator'), async (req, res) => {
   }
 });
 
-router.get('/', restricted, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     // const schools = await db.getSchools();
     const schools = {};
@@ -38,7 +38,7 @@ router.get('/', restricted, async (req, res) => {
   }
 });
 
-router.get('/:id', restricted, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const foundSchool = await db.getShoolById(req.params.id);
     const bubls = await db.getSchoolsBubls(req.params.id);

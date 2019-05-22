@@ -10,6 +10,7 @@ const schoolsRouter = require('../ressources/schools/schools-router.js');
 const BublsRouter = require('../ressources/bubls/bubls-router.js');
 const rolesRouter = require('../ressources/roles/roles-router.js');
 const hashtagsRouter = require('../ressources/hashtags/hashtags-router.js');
+const bublusersRouter = require('../ressources/bubl-users/bubl-users-router.js');
 const restricted = require('../middlewares/restricted.js');
 
 const server = express();
@@ -29,6 +30,7 @@ server.use('/api/schools', schoolsRouter);
 server.use('/api/bubls', BublsRouter);
 server.use('/api/roles', rolesRouter, restricted);
 server.use('/api/hashtags', hashtagsRouter, restricted);
+server.use('api/bublusers', bublusersRouter, restricted);
 
 server.get('/', async (req, res) => {
   try {

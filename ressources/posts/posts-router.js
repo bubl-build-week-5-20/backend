@@ -38,6 +38,7 @@ router.get('/:id', restricted, async (req, res) => {
       res.status(200).json(foundPost);
     }
   } catch (e) {
+    console.log(e.message);
     res
       .status(500)
       .json({errorMessage: 'Server error while retrieving the post.'});

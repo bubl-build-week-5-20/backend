@@ -23,8 +23,8 @@ function getBublById(id) {
 function getBublUsers(id) {
   return db('bubl_users_mapping')
     .join('users', 'users.id', 'bubl_users_mapping.FK_users_id')
-    .select('users.id')
-    .where({'bubl_users_mapping.FK_users_id': id})
+    .select('users.id', 'users.username')
+    .where('bubl_users_mapping.FK_users_id', id)
     .then(users => users.map(user => mapper.userToBody(user)));
 }
 

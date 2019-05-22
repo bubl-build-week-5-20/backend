@@ -65,7 +65,7 @@ function deletePost(id) {
 
 function getPostComments(id) {
   return db('comments')
-    .where('post_id', id)
+    .where('FK_post_id', id)
     .then(comments => comments.map(comment => mapper.commentToBody(comment)));
 }
 
