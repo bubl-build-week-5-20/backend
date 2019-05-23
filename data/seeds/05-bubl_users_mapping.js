@@ -5,10 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       // Inserts seed entries
       return knex('bubl_users_mapping').insert([
-        {FK_bubl_id: 2, FK_users_id: 1},
-        {FK_bubl_id: 1, FK_users_id: 1},
-        {FK_bubl_id: 2, FK_users_id: 3},
-        {FK_bubl_id: 2, FK_users_id: 3}
+        {FK_bubl_id: 2, FK_users_id: 1}
       ]);
     });
 };

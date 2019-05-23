@@ -51,5 +51,8 @@ function changeRole(role, user) {
     .update({
       role: role.role,
       FK_role_id: role.FK_role_id
+    })
+    .then(role => {
+      return db('roles').where(role, 'roles.id');
     });
 }
