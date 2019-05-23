@@ -42,9 +42,13 @@ router.get('/:id', async (req, res) => {
     }
   } catch (e) {
     console.log(e.message);
-    res.status(500).json({
-      errorMessage: `Server error couldn't retrive the school from the database`
-    });
+    const {message} = e;
+    res
+      .status(500)
+      .json({
+        message,
+        errorMessage: `Server error couldn't retrive the school from the database`
+      });
   }
 });
 
