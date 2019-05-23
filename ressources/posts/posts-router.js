@@ -3,23 +3,23 @@ const db = require('./posts-model.js');
 const postValidation = require('../../middlewares/postValidation.js');
 const restricted = require('../../middlewares/restricted.js');
 
-// router.post('/', restricted, async (req, res) => {
-//   try {
-//     const user = req.decodedToken;
+router.post('/', restricted, async (req, res) => {
+  try {
+    const user = req.decodedToken;
 
-//     const post = req.body;
-//     post.author = user.username;
-//     post.FK_user_id = user.subject;
-//     const data = await db.addPost(post);
-//     res.status(201).json(post);
-//   } catch (e) {
-//     const {message} = e;
-//     res.status(500).json({
-//       message,
-//       errorMessage: 'Server error while creating the post.'
-//     });
-//   }
-// });
+    const post = req.body;
+    post.author = user.username;
+    post.FK_user_id = user.subject;
+    const data = await db.addPost(post);
+    res.status(201).json(post);
+  } catch (e) {
+    const {message} = e;
+    res.status(500).json({
+      message,
+      errorMessage: 'Server error while creating the post.'
+    });
+  }
+});
 
 router.get('/', restricted, async (req, res) => {
   try {
