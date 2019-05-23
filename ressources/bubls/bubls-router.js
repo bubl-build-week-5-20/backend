@@ -101,8 +101,10 @@ router.post('/:id/join', restricted, async (req, res) => {
     res.status(200).json(join);
   } catch (e) {
     const {message} = e;
+    const {id} = req.params;
     res.status(500).json({
       message,
+      id,
       errorMessage: `Server error couldn't join the bubl`
     });
   }
