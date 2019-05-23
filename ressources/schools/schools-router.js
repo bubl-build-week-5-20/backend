@@ -43,12 +43,10 @@ router.get('/:id', async (req, res) => {
   } catch (e) {
     console.log(e.message);
     const {message} = e;
-    res
-      .status(500)
-      .json({
-        message,
-        errorMessage: `Server error couldn't retrive the school from the database`
-      });
+    res.status(500).json({
+      message,
+      errorMessage: `Server error couldn't retrive the school from the database`
+    });
   }
 });
 
@@ -82,10 +80,11 @@ router.delete('/:id', checkRoles('administrator'), async (req, res) => {
   }
 });
 
-router.post('/join', restricted, async (req, res) => {
+router.post('/:id/join', restricted, async (req, res) => {
   try {
     const user = req.decodedToken;
     const school = req.body;
+    school.FK_school_id = req.params.id;
 
     const joinSchool = await db.joinSchool(school, user);
     res.status(200).json({
