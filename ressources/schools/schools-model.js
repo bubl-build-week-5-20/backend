@@ -41,8 +41,7 @@ function getSchoolsBubls(id) {
       'bubls.is_active',
       'bubls.created_at'
     )
-    .where({'schools.id': id, FK_school_id: 'schools.id'})
-    .then(bubls => bubls.map(bubl => mapper.bublToBody(bubl)));
+    .where({FK_school_id: id});
 }
 
 function getSchoolsUsers(id) {
