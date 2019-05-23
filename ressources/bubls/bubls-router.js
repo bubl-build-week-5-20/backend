@@ -92,10 +92,11 @@ router.delete(
   }
 );
 
-router.post('/join', restricted, async (req, res) => {
+router.post('/:id/join', restricted, async (req, res) => {
   try {
+    const id = req.params.id;
     const user = req.decodedToken;
-    const id = req.body;
+    // const id = req.body;
     const join = await db.joinBubl(user, id);
     res.status(200).json(join);
   } catch (e) {
