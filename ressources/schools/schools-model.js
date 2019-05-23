@@ -24,7 +24,8 @@ function getBubls() {
     .where({'s.id': 'b.FK_school_id'});
 }
 
-function getShoolById(id) {
+function getShoolById(schoolId) {
+  const id = parseInt(schoolId);
   return db('schools')
     .where({id})
     .first();
