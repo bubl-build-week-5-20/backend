@@ -5,7 +5,6 @@ const restricted = require('../../middlewares/restricted.js');
 
 router.post('/:post_id/comments', restricted, async (req, res) => {
   try {
-    console.log(req.params.post_id);
     const user = req.decodedToken;
     const comment = req.body;
     comment.author = user.username;
