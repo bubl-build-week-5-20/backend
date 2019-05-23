@@ -5,13 +5,19 @@ const restricted = require('../../middlewares/restricted.js');
 
 router.post('/', restricted, async (req, res) => {
   try {
-    const post = await db.addPost(req.body);
+    const user = req.decodedToken;
+
+    const post = req.body;
+    post.author = user.username;
+    post.FK_user_id = user.subject;
+    const data = await db.addPost(post);
     res.status(201).json(post);
   } catch (e) {
-    console.log(e.message);
-    res
-      .status(500)
-      .json({errorMessage: 'Server error while creating the post.'});
+    const {message} = e;
+    res.status(500).json({
+      message,
+      errorMessage: 'Server error while creating the post.'
+    });
   }
 });
 
