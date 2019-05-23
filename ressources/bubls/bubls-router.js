@@ -94,4 +94,16 @@ router.delete(
   }
 );
 
+router.post('/join', restricted, async (req, res) => {
+  try {
+    const id = req.decodedToken.subject;
+    const {FK_bubl_id} = req.body;
+    const join = await db.joinBubl(id, FK_bubl_id);
+    res.status(200).json(join);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({errorMessage: `Server error couldn't join the bubl`});
+  }
+});
+
 module.exports = router;

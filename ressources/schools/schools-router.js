@@ -17,6 +17,7 @@ router.post('/', restricted, checkRoles('administrator'), async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const schools = await db.getSchools();
+
     res.status(200).json(schools);
   } catch (e) {
     console.log(e.message);
@@ -73,6 +74,23 @@ router.delete('/:id', checkRoles('administrator'), async (req, res) => {
     }
   } catch (e) {
     res.status(500).json({errorMessage: `Server couldn't delete the school.`});
+  }
+});
+
+router.post('/join', restricted, async (req, res) => {
+  try {
+    const user = req.decodedToken;
+    const school = req.body;
+
+    const joinSchool = await db.joinSchool(school, user);
+    res.status(200).json({
+      message: `Hi ${user.username}! Welcome to ${school.school_name} `
+    });
+  } catch (e) {
+    console.log(e.message);
+    res
+      .status(500)
+      .json({errorMessage: `Server error couldn't join the school.`});
   }
 });
 

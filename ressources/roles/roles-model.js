@@ -7,7 +7,8 @@ module.exports = {
   getRoleUsers,
   addRole,
   editRole,
-  deleteRole
+  deleteRole,
+  changeRole
 };
 
 function getRoles() {
@@ -42,4 +43,13 @@ function deleteRole(id) {
   return db('roles')
     .where('id', id)
     .del();
+}
+
+function changeRole(role, user) {
+  return db('users')
+    .where({id: user.subject})
+    .update({
+      role: role.role,
+      FK_role_id: role.FK_role_id
+    });
 }
