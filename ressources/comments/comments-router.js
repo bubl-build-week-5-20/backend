@@ -5,7 +5,11 @@ const restricted = require('../../middlewares/restricted.js');
 
 router.post('/', restricted, async (req, res) => {
   try {
-    const comment = db.addComment(req.body);
+    const user = req.decodedToken;
+    const comment = req.body;
+    comment.author = user.username;
+    comment.FK_user_id = user.subject;
+    const data = db.addComment(comment);
     res.status(201).json(comment);
   } catch (e) {
     res
