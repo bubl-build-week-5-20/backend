@@ -85,11 +85,14 @@ router.post('/:id/join', restricted, async (req, res) => {
     const user = req.decodedToken;
     const school = req.body;
     school.FK_school_id = req.params.id;
-
-    const joinSchool = await db.joinSchool(school, user);
-    res.status(200).json({
-      message: `Hi ${user.username}! Welcome to ${school.school_name} `
-    });
+    if (!school) {
+      res.status(400).json({errorMessage: 'No school name provided!'});
+    } else {
+      const joinSchool = await db.joinSchool(school, user);
+      res.status(200).json({
+        message: `Hi ${user.username}! Welcome to ${school.school_name} `
+      });
+    }
   } catch (e) {
     console.log(e.message);
     res
