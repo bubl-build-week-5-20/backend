@@ -51,10 +51,8 @@ exports.up = function(knex, Promise) {
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
     })
-    .createTable('bubl_users_mapping', tbl => {
-      tbl.increments();
-      tbl
-        .integer('FK_bubl_id')
+    .createTable('bubl_users_mapping', t => {
+      t.integer('FK_bubl_id')
         .unsigned()
         .notNullable()
         .references('id')
@@ -62,14 +60,15 @@ exports.up = function(knex, Promise) {
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
 
-      tbl
-        .integer('FK_users_id')
+      t.integer('FK_users_id')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('users')
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
+
+      t.primary(['FK_bubl_id', 'FK_users_id']);
     })
     .createTable('posts', tbl => {
       tbl.increments();

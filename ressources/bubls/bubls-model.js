@@ -55,12 +55,3 @@ function joinBubl({subject: FK_users_id}, FK_bubl_id) {
       FK_bubl_id
     });
 }
-
-// function joinSchool(school, user) {
-//   return db('users')
-//     .where({id: user.subject})
-//     .update({
-//       school_name: school.school_name,
-//       FK_school_id: school.FK_school_id
-//     });
-// }
