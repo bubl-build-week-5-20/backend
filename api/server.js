@@ -30,7 +30,7 @@ server.use('/api/schools', schoolsRouter);
 server.use('/api/bubls', BublsRouter);
 server.use('/api/roles', rolesRouter, restricted);
 server.use('/api/hashtags', hashtagsRouter, restricted);
-server.use('api/bublusers', bublusersRouter, restricted);
+server.use('/api/bubls/users', bublusersRouter, restricted);
 
 server.get('/', async (req, res) => {
   try {
