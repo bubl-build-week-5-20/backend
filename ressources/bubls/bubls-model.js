@@ -47,12 +47,12 @@ function deleteBubl(id) {
     .del();
 }
 
-function joinBubl({subject: FK_users_id}, id) {
+function joinBubl({subject: FK_users_id}, FK_bubl_id) {
   return db('bubl_users_mapping')
-    .where({FK_users_id, FK_bubl_id})
+    .where({FK_users_id})
     .insert({
       FK_users_id,
-      FK_bubl_id: id
+      FK_bubl_id
     });
 }
 
