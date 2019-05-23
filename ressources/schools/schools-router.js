@@ -16,19 +16,7 @@ router.post('/', restricted, checkRoles('administrator'), async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    // const schools = await db.getSchools();
-    const schools = {};
-    const bubls = await db.getBubls();
-    console.log(bubls);
-    bubls.map(bubl => {
-      if (schools[bubl.school_name] === undefined) {
-        schools[bubl.school_name] = [];
-        schools[bubl.school_name].push(bubl.bubl_name);
-      } else {
-        schools[bubl.school_name].push(bubl.bubl_name);
-      }
-    });
-
+    const schools = await db.getSchools();
     res.status(200).json(schools);
   } catch (e) {
     console.log(e.message);
