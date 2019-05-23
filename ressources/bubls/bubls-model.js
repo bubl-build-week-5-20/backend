@@ -7,7 +7,8 @@ module.exports = {
   getBublUsers,
   addBubl,
   editBubl,
-  deleteBubl
+  deleteBubl,
+  joinBubl
 };
 
 function getBubls() {
@@ -44,4 +45,12 @@ function deleteBubl(id) {
   return db('bubls')
     .where('id', id)
     .del();
+}
+
+async function joinBubl(userId, bublId) {
+  const [id] = await db('bubl_users_mapping').insert({
+    FK_users_id: userId,
+    FK_bubl_Id: bublId
+  });
+  return db('bubl_users_mapping').where('id', id);
 }

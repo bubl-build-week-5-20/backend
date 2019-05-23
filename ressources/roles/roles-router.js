@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const db = require('./roles-model.js');
+const restricted = require('../../middlewares/restricted.js');
 
-router.post('/', async (req, res) => {
+router.post('/', restricted, async (req, res) => {
   try {
     const role = await db.addRole(req.body);
     res.status(201).json(role);
@@ -12,7 +13,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', restricted, async (req, res) => {
   try {
     const role = await db.getRoles();
     res.status(200).json(role);
@@ -23,7 +24,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', restricted, async (req, res) => {
   try {
     const foundRole = await db.getRoleById(req.params.id);
     const users = await db.getRoleUsers(req.params.id);
@@ -43,7 +44,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', restricted, async (req, res) => {
   try {
     const editedRole = await db.editRole(req.params.id, req.body);
     if (!editedRole) {
@@ -60,7 +61,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', restricted, async (req, res) => {
   try {
     const deletedRole = await db.deleteRole(req.params.id);
     if (!deletedRole) {
@@ -74,6 +75,20 @@ router.delete('/:id', async (req, res) => {
     res
       .status(500)
       .json({errorMessage: `Server error couldn't delete the role.`});
+  }
+});
+
+router.post('/change', restricted, async (req, res) => {
+  try {
+    const user = req.decodedToken;
+    const role = req.body;
+    const changeRole = await db.changeRole(role, user);
+    res.status(200).json({message: `Your role as been updated!`});
+  } catch (e) {
+    console.log(e.message);
+    res
+      .status(500)
+      .json({errorMessage: `Server error couldn't change user role.`});
   }
 });
 

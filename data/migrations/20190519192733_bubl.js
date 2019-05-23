@@ -53,7 +53,6 @@ exports.up = function(knex, Promise) {
     })
     .createTable('bubl_users_mapping', tbl => {
       tbl.increments();
-      tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('FK_bubl_id')
         .unsigned()

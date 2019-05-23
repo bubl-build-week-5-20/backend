@@ -9,7 +9,8 @@ module.exports = {
   getSchoolsUsers,
   addSchool,
   editSchool,
-  deleteSchool
+  deleteSchool,
+  joinSchool
 };
 
 function getSchools() {
@@ -17,11 +18,10 @@ function getSchools() {
 }
 
 function getBubls() {
-  return db('bubls as b')
-    .select('b.bubl_name', 'schools.school_name')
-    .join('schools', {
-      'schools.id': 'b.FK_school_id'
-    });
+  return db('schools as s')
+    .join('bubls as b', 'b.id', 'b.bubl_name', 's.id')
+    .select('b.id', 'b.bubl_name', 'b.FK_school_id', 's.id', 's.school_name')
+    .where({'s.id': 'b.FK_school_id'});
 }
 
 function getShoolById(id) {
@@ -40,7 +40,7 @@ function getSchoolsBubls(id) {
       'bubls.is_active',
       'bubls.created_at'
     )
-    .where('bubls.FK_school_id', id)
+    .where({'schools.id': id, FK_school_id: 'schools.id'})
     .then(bubls => bubls.map(bubl => mapper.bublToBody(bubl)));
 }
 
@@ -77,4 +77,13 @@ function deleteSchool(id) {
   return db('schools')
     .where('id', id)
     .del();
+}
+
+function joinSchool(school, user) {
+  return db('users')
+    .where({id: user.subject})
+    .update({
+      school_name: school.school_name,
+      FK_school_id: school.FK_school_id
+    });
 }
