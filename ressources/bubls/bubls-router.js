@@ -29,16 +29,14 @@ router.get('/', restricted, async (req, res) => {
 
 router.get('/:id', restricted, async (req, res) => {
   try {
-    console.log(req.params.id);
     const foundBubl = await db.getBublById(req.params.id);
-    console.log(foundBubl);
-    const users = await db.getBublUsers(req.params.id);
-    console.log(users);
+
     if (!foundBubl) {
       res
         .status(404)
         .json({errorMessage: `Bubl with ID ${req.params.id} not found.`});
     } else {
+      const users = await db.getBublUsers(req.params.id);
       const bubl = {...foundBubl, users};
       res.status(200).json(bubl);
     }
@@ -96,9 +94,9 @@ router.delete(
 
 router.post('/join', restricted, async (req, res) => {
   try {
-    const id = req.decodedToken.subject;
-    const {FK_bubl_id} = req.body;
-    const join = await db.joinBubl(id, FK_bubl_id);
+    const user = req.decodedToken;
+    const id = req.body;
+    const join = await db.joinBubl(user, id);
     res.status(200).json(join);
   } catch (e) {
     console.log(e.message);

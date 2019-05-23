@@ -45,14 +45,11 @@ function deleteRole(id) {
     .del();
 }
 
-function changeRole(role, user) {
+function changeRole({FK_role_id, role}, {subject: id}) {
   return db('users')
-    .where({id: user.subject})
+    .where({id})
     .update({
-      role: role.role,
-      FK_role_id: role.FK_role_id
-    })
-    .then(role => {
-      return db('roles').where(role, 'roles.id');
+      FK_role_id,
+      role
     });
 }
