@@ -59,6 +59,14 @@ function getSchoolsUsers(id) {
     .then(users => users.map(user => mapper.userToBody(user)));
 }
 
+// function getSchoolsUsers(schoolId) {
+//   const id = parseInt(schoolId);
+//   return db('users as u')
+//     .join('schools as s', 's.id', 'u.FK_school_id')
+//     .select('s.id', 's.school_name')
+//     .where({id});
+// }
+
 async function addSchool(school) {
   const [id] = await db('schools').insert(school, 'id');
   return db('schools')
