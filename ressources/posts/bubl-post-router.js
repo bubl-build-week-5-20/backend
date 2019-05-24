@@ -10,8 +10,9 @@ router.post('/:bubl_id/posts', restricted, async (req, res) => {
     post.author = user.username;
     post.FK_user_id = user.subject;
     post.FK_bubl_id = parseInt(req.params.bubl_id);
-    const data = db.addPost(post);
-    res.status(201).json(post);
+    console.log(post);
+    const data = await db.addPost(post);
+    res.status(201).json(data);
   } catch (e) {
     const {message} = e;
     res.status(500).json({

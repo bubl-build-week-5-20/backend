@@ -84,7 +84,7 @@ exports.up = function(knex, Promise) {
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('posts')
+        .inTable('users')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
       tbl
