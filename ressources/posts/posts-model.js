@@ -44,7 +44,7 @@ function getPostByTitle(title) {
 }
 
 async function addPost(post) {
-  const [id] = await db('posts').insert(post, 'id');
+  const [id] = await db('posts').insert(post);
   return db('posts')
     .where({id})
     .first();
